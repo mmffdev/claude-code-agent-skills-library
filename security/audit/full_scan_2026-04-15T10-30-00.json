@@ -1,0 +1,91 @@
+{
+  "scan_id": "full_2026-04-15T10-30-00",
+  "timestamp": "2026-04-15T10:30:00Z",
+  "scan_type": "full",
+  "watch_mode": false,
+  "coverage": {
+    "files_scanned": 47,
+    "lines_analyzed": 8240,
+    "rules_applied": 26
+  },
+  "whats_great": [
+    "Environment variables used for all API keys and secrets",
+    "Helmet.js middleware configured on Express server",
+    "SQL queries use parameterised bindings via better-sqlite3",
+    "Docker commands validated against an allowlist before execution",
+    "CORS restricted to localhost origins only",
+    "WebSocket connections authenticated before upgrade"
+  ],
+  "concerns": [
+    {
+      "severity": "high",
+      "category": "Command Injection",
+      "file": "backend/src/routes/docker.ts",
+      "line": 87,
+      "description": "User-supplied container name passed directly to exec() without sanitisation",
+      "recommendation": "Validate container names against a strict alphanumeric + hyphen pattern before passing to shell commands"
+    },
+    {
+      "severity": "high",
+      "category": "Path Traversal",
+      "file": "backend/src/routes/volumes.ts",
+      "line": 134,
+      "description": "Volume browser accepts relative file paths from the client without normalising or restricting to the volume root",
+      "recommendation": "Use path.resolve() and verify the resolved path starts with the expected volume mount directory"
+    },
+    {
+      "severity": "medium",
+      "category": "Information Disclosure",
+      "file": "backend/src/server.ts",
+      "line": 22,
+      "description": "Global error handler returns full stack traces in non-production mode — stack traces visible when NODE_ENV is unset",
+      "recommendation": "Default to production-safe error responses when NODE_ENV is not explicitly set to 'development'"
+    },
+    {
+      "severity": "medium",
+      "category": "Missing Rate Limiting",
+      "file": "backend/src/routes/auth.ts",
+      "line": 41,
+      "description": "License validation endpoint has no rate limiting — allows unlimited retry attempts",
+      "recommendation": "Add express-rate-limit middleware to authentication and license endpoints"
+    },
+    {
+      "severity": "medium",
+      "category": "XSS",
+      "file": "web/src/components/LogViewer.tsx",
+      "line": 63,
+      "description": "Docker log output rendered with dangerouslySetInnerHTML to preserve ANSI colour formatting",
+      "recommendation": "Use a safe ANSI-to-HTML library like anser with output sanitised through DOMPurify"
+    },
+    {
+      "severity": "low",
+      "category": "Insecure Storage",
+      "file": "web/src/utils/auth.ts",
+      "line": 18,
+      "description": "License token stored in localStorage — accessible to any script running on the page",
+      "recommendation": "Move token to an httpOnly cookie or use sessionStorage as a minimum improvement"
+    },
+    {
+      "severity": "low",
+      "category": "Missing Validation",
+      "file": "backend/src/routes/projects.ts",
+      "line": 56,
+      "description": "Project name field accepts any string without length or character restrictions",
+      "recommendation": "Validate project names — max length, alphanumeric + hyphens only, no path separators"
+    }
+  ],
+  "recommendations": [
+    "Sanitise all user input before passing to shell commands — especially Docker CLI operations",
+    "Add path traversal protection to the volume browser endpoint",
+    "Implement rate limiting on authentication and license validation routes",
+    "Replace dangerouslySetInnerHTML in LogViewer with a safe rendering approach",
+    "Default error handler should assume production when NODE_ENV is unset",
+    "Add input validation schemas to all POST/PUT endpoints"
+  ],
+  "pen_test_notes": [
+    "GET /api/docker/status returns Docker Engine version — useful for fingerprinting",
+    "WebSocket endpoint accepts connections before authentication handshake on slow networks",
+    "Volume browser could be used to read sensitive files if path traversal is not fixed",
+    "No Content-Security-Policy header set — allows inline scripts if XSS is achieved"
+  ]
+}
