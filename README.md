@@ -97,7 +97,7 @@ Agent: Full scan complete. 5 concerns found. Watching for changes now.
 ```
 You: <sec_front>
 Agent: Frontend scan complete. Found 3 high-severity concerns.
-       Report saved to dev-mode/security/reports/frontend_scan_2026-04-15T10-30-00.json
+       Report saved to security/reports/frontend_scan_2026-04-15T10-30-00.json
        Most critical: CommentBox.jsx line 42 uses dangerouslySetInnerHTML
        with user input.
 ```
@@ -127,7 +127,7 @@ It responds in plain language unless you ask for technical details.
 Every scan creates a JSON report in:
 
 ```
-dev-mode/security/reports/
+security/reports/
 ```
 
 Files are named by scan type and timestamp, e.g. `frontend_scan_2026-04-15T10-30-00.json`.
@@ -186,14 +186,14 @@ Each report tells you:
 To view all your reports in a single web page, run:
 
 ```bash
-npx ts-node dev-mode/security/research.ts
+npx ts-node security/research.ts
 ```
 
 This generates `research-compiled.html` — a page showing all scans, concerns grouped by severity, and recommendations. Open it in any browser.
 
 ### Demo Report
 
-A sample scan output is included so you can see what a real report looks like before running your first scan:
+After you run a scan, you will find a report like this in `security/reports/`:
 
 ```
 /security/reports/full_scan_2026-04-15T10-30-00.json
@@ -216,7 +216,7 @@ When you type a shortcut:
 1. Claude reads `config.md` — a small trigger file
 2. Claude loads `c_securityAudit.md` — the full scan instructions
 3. The agent runs the scan against your code
-4. A JSON report is saved to `dev-mode/security/reports/`
+4. A JSON report is saved to `security/reports/`
 
 Nothing is loaded into memory until you actually run a security command. This keeps Claude Code fast when you're not using the scanner.
 

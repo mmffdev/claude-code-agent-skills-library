@@ -64,7 +64,7 @@ Assume the project uses:
 
 ## Report Format (JSON)
 
-Each scan produces a JSON file in `dev-mode/security/reports/` with this structure:
+Each scan produces a JSON file in `security/reports/` with this structure:
 
 ```json
 {

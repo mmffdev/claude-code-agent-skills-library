@@ -33,4 +33,4 @@ If `--watch` is appended to any shortcut (e.g. `<sec_full> --watch`), pass it as
 | `config.md` | This file — trigger config (must be in project root or `.claude/`) |
 | `c_securityAudit.md` | Full scan instructions — loaded on demand |
 | `agent-config.md` | User settings (folder paths, severity filters, watch frequency) |
-| `dev-mode/security/reports/` | Where JSON reports are saved |
+| `security/reports/` | Where JSON reports are saved |
