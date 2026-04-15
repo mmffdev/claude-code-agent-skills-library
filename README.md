@@ -25,14 +25,14 @@ Before installing, make sure you have:
 
 ## Installation
 
-**Step 1** — Copy these four files into your project's root folder (the top-level folder where your code lives):
+**Step 1** — Place these files and folders inside the `Agent-Security-Audit/` directory at your project root:
 
 | File | What it does |
 |------|-------------|
-| `config.md` | Small trigger file — tells Claude Code the skill exists |
-| `c_securityAudit.md` | The full scan instructions the agent follows |
-| `agent-config.md` | Your settings (folder paths, severity filters, etc.) |
-| `/security/research.ts` | Optional — generates an HTML dashboard from your reports |
+| `Agent-Security-Audit/config.md` | Small trigger file — tells Claude Code the skill exists |
+| `Agent-Security-Audit/c_securityAudit.md` | The full scan instructions the agent follows |
+| `Agent-Security-Audit/agent-config.md` | Your settings (folder paths, severity filters, etc.) |
+| `Agent-Security-Audit/security/research.ts` | Optional — generates an HTML dashboard from your reports |
 
 **Step 2** — That's it. No packages to install, no configuration needed. The scanner is ready to use.
 
@@ -40,13 +40,15 @@ After install, your project will look like this:
 
 ```
 your-project/
-├── config.md                     # Trigger file
-├── c_securityAudit.md            # Scan instructions
-├── agent-config.md               # Settings
-├── security/
-│     ├── reports/              # Reports appear here automatically
-│     │   └── *.json
-│     └── research.ts           # Optional HTML dashboard generator
+├── README.md
+├── Agent-Security-Audit/
+│     ├── config.md                # Trigger file
+│     ├── c_securityAudit.md       # Scan instructions
+│     ├── agent-config.md          # Settings
+│     └── security/
+│          ├── reports/            # Reports appear here automatically
+│          │     └── *.json
+│          └── research.ts         # Optional HTML dashboard generator
 ```
 
 ## How to Use It
@@ -97,7 +99,7 @@ Agent: Full scan complete. 5 concerns found. Watching for changes now.
 ```
 You: <sec_front>
 Agent: Frontend scan complete. Found 3 high-severity concerns.
-       Report saved to security/reports/frontend_scan_2026-04-15T10-30-00.json
+       Report saved to Agent-Security-Audit/security/reports/frontend_scan_2026-04-15T10-30-00.json
        Most critical: CommentBox.jsx line 42 uses dangerouslySetInnerHTML
        with user input.
 ```
@@ -127,7 +129,7 @@ It responds in plain language unless you ask for technical details.
 Every scan creates a JSON report in:
 
 ```
-security/reports/
+Agent-Security-Audit/security/reports/
 ```
 
 Files are named by scan type and timestamp, e.g. `frontend_scan_2026-04-15T10-30-00.json`.
@@ -186,24 +188,24 @@ Each report tells you:
 To view all your reports in a single web page, run:
 
 ```bash
-npx ts-node security/research.ts
+npx ts-node Agent-Security-Audit/security/research.ts
 ```
 
 This generates `research-compiled.html` — a page showing all scans, concerns grouped by severity, and recommendations. Open it in any browser.
 
 ### Demo Report
 
-After you run a scan, you will find a report like this in `security/reports/`:
+After you run a scan, you will find a report like this in `Agent-Security-Audit/security/reports/`:
 
 ```
-/security/reports/full_scan_2026-04-15T10-30-00.json
+/Agent-Security-Audit/security/reports/full_scan_2026-04-15T10-30-00.json
 ```
 
 Open it in any text editor or JSON viewer. It contains example findings across all severity levels (high, medium, low) with realistic file paths, line numbers, and fix recommendations.
 
 ## Customisation
 
-Edit `agent-config.md` to change:
+Edit `Agent-Security-Audit/agent-config.md` to change:
 
 - **Default folder paths** — where the scanner looks for your code
 - **Severity filters** — which severity levels to include in reports
@@ -213,10 +215,10 @@ Edit `agent-config.md` to change:
 
 When you type a shortcut:
 
-1. Claude reads `config.md` — a small trigger file
-2. Claude loads `c_securityAudit.md` — the full scan instructions
+1. Claude reads `Agent-Security-Audit/config.md` — a small trigger file
+2. Claude loads `Agent-Security-Audit/c_securityAudit.md` — the full scan instructions
 3. The agent runs the scan against your code
-4. A JSON report is saved to `security/reports/`
+4. A JSON report is saved to `Agent-Security-Audit/security/reports/`
 
 Nothing is loaded into memory until you actually run a security command. This keeps Claude Code fast when you're not using the scanner.
 
@@ -268,10 +270,10 @@ If your stack differs, the agent asks for clarification and adapts.
 | Problem | Fix |
 |---------|-----|
 | Agent says "folder not found" | Tell it where your code lives. Example: "My frontend is in client/src" |
-| Too many false positives | Edit `agent-config.md` and lower the priority of low severity issues |
+| Too many false positives | Edit `Agent-Security-Audit/agent-config.md` and lower the priority of low severity issues |
 | Watch mode stops unexpectedly | Restart with the shortcut + `--watch` again |
-| Agent not responding to shortcuts | Make sure `config.md` is in your project root and Claude Code can see it |
-| Reports not showing in dashboard | Check that `research.ts` is pointing to the correct reports folder path |
+| Agent not responding to shortcuts | Make sure `Agent-Security-Audit/config.md` is in your project root and Claude Code can see it |
+| Reports not showing in dashboard | Check that `Agent-Security-Audit/security/research.ts` is pointing to the correct reports folder path |
 
 ## Version
 
