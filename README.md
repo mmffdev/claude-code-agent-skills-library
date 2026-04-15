@@ -32,7 +32,7 @@ Before installing, make sure you have:
 | `config.md` | Small trigger file — tells Claude Code the skill exists |
 | `c_securityAudit.md` | The full scan instructions the agent follows |
 | `agent-config.md` | Your settings (folder paths, severity filters, etc.) |
-| `dev-mode/security/research.ts` | Optional — generates an HTML dashboard from your reports |
+| `/security/research.ts` | Optional — generates an HTML dashboard from your reports |
 
 **Step 2** — That's it. No packages to install, no configuration needed. The scanner is ready to use.
 
@@ -43,11 +43,10 @@ your-project/
 ├── config.md                     # Trigger file
 ├── c_securityAudit.md            # Scan instructions
 ├── agent-config.md               # Settings
-├── dev-mode/
-│   └── security/
-│       ├── reports/              # Reports appear here automatically
-│       │   └── *.json
-│       └── research.ts           # Optional HTML dashboard generator
+├── security/
+│     ├── reports/              # Reports appear here automatically
+│     │   └── *.json
+│     └── research.ts           # Optional HTML dashboard generator
 ```
 
 ## How to Use It
