@@ -192,6 +192,16 @@ npx ts-node dev-mode/security/research.ts
 
 This generates `research-compiled.html` — a page showing all scans, concerns grouped by severity, and recommendations. Open it in any browser.
 
+### Demo Report
+
+A sample scan output is included so you can see what a real report looks like before running your first scan:
+
+```
+/security/reports/full_scan_2026-04-15T10-30-00.json
+```
+
+Open it in any text editor or JSON viewer. It contains example findings across all severity levels (high, medium, low) with realistic file paths, line numbers, and fix recommendations.
+
 ## Customisation
 
 Edit `agent-config.md` to change:
